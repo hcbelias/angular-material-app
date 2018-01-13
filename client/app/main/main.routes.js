@@ -5,9 +5,7 @@ export default function routes($stateProvider) {
 
   $stateProvider.state('main', {
     url: '/main',
-    authenticate: true,
     template: '<main></main>',
-    title: 'Caixa',
     nav: true
   });
 }

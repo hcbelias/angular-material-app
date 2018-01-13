@@ -1,4 +1,4 @@
-md-toolbar(md-scroll-shrink ng-if='navbarCtrl.isLoggedIn() && navbarCtrl.hasNavbar()')
+md-toolbar(md-scroll-shrink ng-if='navbarCtrl.hasNavbar()')
   .md-toolbar-tools
     md-button.md-icon-button(aria-label='Menu' ng-click='navbarCtrl.openSidenav()' hide-gt-sm='')
       md-icon(title='Menu') menu
@@ -13,63 +13,7 @@ md-toolbar(md-scroll-shrink ng-if='navbarCtrl.isLoggedIn() && navbarCtrl.hasNavb
     div(hide-xs hide-gt-xs show-gt-sm='')
       md-button.md-icon-button(ui-sref='main')
         md-icon(title='Vendas') add_shopping_cart    
-      md-menu(md-offset='0, 50' ng-if='navbarCtrl.isAdmin()')
-        md-button.md-icon-button(aria-label='Cadastro' ng-click='$mdMenu.open($event)' title='Cadastro')
-          md-icon(md-menu-origin='') add_circle
-        md-menu-content
-          md-menu-item.menu-header
-            h3 Cadastro
-          md-menu-item
-            md-button(ui-sref='client-create')
-              md-icon(md-menu-align-target='') person
-              span Cliente
-          md-menu-item
-            md-button(ui-sref='provider-create')
-              md-icon(md-menu-align-target='') local_shipping
-              span Fornecedor
-          md-menu-item
-            md-button(ui-sref='product-create')
-              md-icon(md-menu-align-target='') shopping_basket
-              span Produto
-          md-menu-item
-            md-button(ui-sref='user-create')
-              md-icon(md-menu-align-target='') supervisor_account
-              span Funcionário
-          md-menu-item
-            md-button(ui-sref='invoice-create')
-              md-icon(md-menu-align-target='') receipt
-              span Pedido
-      md-menu(md-offset='0, 50' ng-if='navbarCtrl.isAdmin()')
-        md-button.md-icon-button(aria-label='Busca', ng-click='$mdMenu.open($event)' title='Busca')
-          md-icon(md-menu-origin='') search
-        md-menu-content
-          md-menu-item.menu-header
-            h3 Busca
-          md-menu-item
-            md-button(ui-sref='client-list')
-              md-icon(md-menu-align-target='') person
-              span Cliente
-          md-menu-item
-            md-button(ui-sref='provider-list')
-              md-icon(md-menu-align-target='') local_shipping
-              span Fornecedor
-          md-menu-item
-            md-button(ui-sref='product-list')
-              md-icon(md-menu-align-target='') shopping_basket
-              span Produto
-          md-menu-item
-            md-button(ui-sref='user-list')
-              md-icon(md-menu-align-target='') supervisor_account
-              span Funcionário
-          md-menu-item
-            md-button(ui-sref='invoice-list')
-              md-icon(md-menu-align-target='') receipt
-              span Pedido
-      md-button.md-icon-button(ui-sref='stock-list' ng-if='navbarCtrl.isAdmin()')
-        md-icon(title='Estoque') store
-      md-button.md-icon-button(ui-sref='invoice-list' ng-if='!navbarCtrl.isAdmin()')
-        md-icon(title='Busca de Pedidos') receipt
       md-button.md-icon-button(ng-if='navbarCtrl.isAdmin()')
-        md-icon(title='Relatórios' ui-sref='report') trending_up
-      md-button.md-icon-button(ui-sref='logout')
+        md-icon(title='Relat�rios' ui-sref='report') trending_up
+      md-button.md-icon-button(ui-sref='logout' ng-if='navbarCtrl.isLoggedIn()')
         md-icon(title='Logout') exit_to_app

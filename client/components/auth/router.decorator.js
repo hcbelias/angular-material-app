@@ -29,7 +29,7 @@ export function routerDecorator($rootScope, $state, Auth, $location) {
             return;
           }
           event.preventDefault();
-          window.location = '/login';
+          $state.go('login');
         });
     }
   });

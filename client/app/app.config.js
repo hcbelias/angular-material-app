@@ -29,7 +29,7 @@ export function routeConfig($urlRouterProvider, $locationProvider, $mdThemingPro
 
 
 
-  $urlRouterProvider.otherwise('/login');
+  $urlRouterProvider.otherwise('/main');
 
   $locationProvider.html5Mode(true);
 }

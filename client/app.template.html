@@ -9,7 +9,7 @@
   <meta name="keywords" content="web,CHOPP">
   <meta name="author" content="Henrique Elias">
   <base href="/">
-  <title>web - CHOPP NO LITRO</title>
+  <title>Angular Material App</title>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -22,60 +22,14 @@
 
   <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
   <!-- Global site tag (gtag.js) - Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-36484766-2"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-XXXXXX-2"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
-    gtag('config', 'UA-36484766-2');
+    gtag('config', 'UA-XXXXXXX-2');
   </script>
-
-  <md-sidenav md-component-id="left" md-whiteframe="4">
-    <md-content layout="column" layout-align='start start' layout-padding>
-      <md-button ui-sref='main'>
-        <md-icon>add_shopping_cart</md-icon> Vendas
-      </md-button>
-      <div class="md-subhead">Cadastro</div>
-      <md-button ui-sref='client-create'>
-        <md-icon>person</md-icon> Cliente
-      </md-button>
-      <md-button ui-sref='provider-create'>
-        <md-icon>local_shipping</md-icon> Fornecedor
-      </md-button>
-      <md-button ui-sref='product-create'>
-        <md-icon>shopping_basket</md-icon> Produto
-      </md-button>
-      <md-button ui-sref='main'>
-        <md-icon>supervisor_account</md-icon> Funcionário
-      </md-button>
-      <md-button ui-sref='invoice-create'>
-        <md-icon>receipt</md-icon> Pedido
-      </md-button>
-      <div class="md-subhead">Busca</div>
-      <md-button ui-sref='client-list'>
-        <md-icon>person</md-icon> Cliente
-      </md-button>
-      <md-button ui-sref='provider-list'>
-        <md-icon>local_shipping</md-icon> Fornecedor
-      </md-button>
-      <md-button ui-sref='product-list'>
-        <md-icon>shopping_basket</md-icon> Produto
-      </md-button>
-      <md-button ui-sref='main'>
-        <md-icon>supervisor_account</md-icon> Funcionário
-      </md-button>
-      <md-button ui-sref='invoice-list'>
-        <md-icon>receipt</md-icon> Pedido
-      </md-button>
-      <md-button ui-sref='invoice-list'>
-        <md-icon>trending_up</md-icon> Relatórios
-      </md-button>
-      <md-button ui-sref='invoice-list'>
-        <md-icon>exit_to_app</md-icon> Logout
-      </md-button>
-    </md-content>
-  </md-sidenav>
   <navbar></navbar>
   <div ui-view=""></div>
   <footer></footer>

@@ -29,7 +29,7 @@ export default class LoginController {
       })
         .then(() => {
           // Logged in, redirect to home
-          window.location = '/main';
+          this.$state.go('main');
         })
         .catch(err => {
           this.submitted = false;

@@ -17,6 +17,7 @@ export function authInterceptor($rootScope, $q, $cookies, $injector, Util, $loca
     // Intercept 401s and redirect you to login
     responseError(response) {
       if (response.status === 401 && response.config.url !== "/auth/local") {
+        debugger;
         window.location = '/login';
       }
       return $q.reject(response);

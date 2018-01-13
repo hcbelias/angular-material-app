@@ -17,14 +17,3 @@ $x-large-and-up: "only screen and (min-width : #{$large-screen})" !default;
 
 $red-color: #CC0000;
 $orange-color: #FF9933;
-
-
-@font-face {
-    font-family: 'CustomWebsiteFont';
-    src: 
-        //url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-        //url('webfont.woff2') format('woff2'), /* Super Modern Browsers */
-        //url('webfont.woff') format('woff'), /* Pretty Modern Browsers */
-        url('../assets/fonts/arial_rounded_bold.ttf')  format('truetype'), /* Safari, Android, iOS */
-        //url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
-}

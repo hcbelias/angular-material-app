@@ -9,15 +9,6 @@ import path from 'path';
 
 export default function(app) {
   // Insert routes below
-  app.use('/api/stocks', require('./api/stock'));
-  app.use('/api/invoices', require('./api/invoice'));
-  app.use('/api/providers', require('./api/provider'));
-  app.use('/api/items', require('./api/item'));
-  app.use('/api/stores', require('./api/store'));
-  app.use('/api/cashiers', require('./api/cashier'));
-  app.use('/api/sales', require('./api/sale'));
-  app.use('/api/clients', require('./api/client'));
-  app.use('/api/products', require('./api/product'));
   app.use('/api/users', require('./api/user'));
 
   app.use('/auth', require('./auth').default);
