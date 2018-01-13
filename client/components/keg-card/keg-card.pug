@@ -1,0 +1,53 @@
+md-card.kegcard(ng-class='{ "warning-card":  ($ctrl.keg.remaining / $ctrl.keg.volume) <= 0.2, "blink-effect": $ctrl.edit }')
+  md-card-header.shrink-header(layout='column' layout-gt-sm='row')
+    md-button.md-accent.md-raised.md-secondary(aria-label='Adicionar Chopp' ng-click='$ctrl.exchangeKeg($ctrl.keg, $ctrl.position)' ng-if='$ctrl.edit')
+      span(title='Adicone/Troque um Barril') {{ $ctrl.position + 1}}
+    div(flex layout='column')
+      div(layout='column'  layout-gt-sm='row')
+        div(ng-if='$ctrl.keg.empty')
+          p Escolha um Barril
+        md-card-header-text(ng-if='!$ctrl.keg.empty' layout='column' layout-gt-sm='row')
+          div(flex='45' flex-gt-sm='40' layout-align='start center' title='{{$ctrl.keg.name}} - {{ $ctrl.keg.kegId}}LJ{{("0" + $ctrl.keg.store.order).slice(-2)}}')
+            span.md-title.keg-name {{ $ctrl.keg.name }}
+          div(flex='10' flex-gt-sm='20' layout-align='center center')
+            .md-subhead.volume-total-container( ng-if='$ctrl.edit' ng-class='{ "warning-text": (($ctrl.keg.remaining / $ctrl.keg.volume) <= 0.2) }') {{ $ctrl.keg.remaining }}/{{ $ctrl.keg.volume }}L 
+          div(flex='45' flex-gt-sm='40' layout-align='start center')
+            .md-subhead.volume-total-container( ng-if='$ctrl.edit' ng-class='{ "warning-text": (($ctrl.keg.remaining / $ctrl.keg.volume) <= 0.2) }') {{  ($ctrl.keg.remaining / $ctrl.keg.volume) <= 0.2 ? 'Fim de Barril' : ''}} 
+        md-card-header-text(ng-if='!$ctrl.keg.empty && !$ctrl.edit' layout-align='start start' layout='column') 
+          .md-subhead Chopp: R${{$ctrl.keg.pintPrice}}
+          .md-subhead Litro: R${{$ctrl.keg.literPrice}}
+        md-card-header-text(ng-if='!$ctrl.keg.empty && !$ctrl.edit'  layout-align='start start' layout='column')
+          .md-subhead Total: R${{ $ctrl.getTotal()}}
+      .button-container(layout='column' layout-gt-sm='row' ng-if='!$ctrl.keg.empty')
+        div(layout='column' layout-gt-sm='row' flex='45' flex-gt-sm='45' layout-align='center center')
+          md-button.md-primary.md-raised.md-secondary(aria-label='Adicionar Copo' ng-click='$ctrl.addPint()' ng-if='$ctrl.edit')
+            md-icon(title='Adicionar Chopp') add
+          .container-label(layout="row" layout-align="start start")
+            div(layout='column' layout-align='center center')
+              span.title-label COPO
+              span.quantity-label(flex) {{$ctrl.keg.qtdPint || 0}}
+          md-button.md-warn.md-raised.md-secondary(aria-label='Remover Copo' ng-click='$ctrl.removePint()' ng-disabled='!$ctrl.keg.qtdPint'  ng-if='$ctrl.edit')
+            md-icon(title='Remover Chopp') remove
+        md-menu(md-offset='0, 50' ng-if='!$ctrl.keg.empty && $ctrl.edit' layout-align='center center' layout='column'  flex='10' flex-gt-sm='10')  
+          md-button.md-icon-button(aria-label='Preços', ng-click='$mdMenu.open($event)')
+            md-icon(md-menu-origin='' title='Informações de Caixa') info
+          md-menu-content(width="2")
+            md-menu-item.menu-header
+              h3 Preços
+            md-menu-item
+              .md-subhead COPO:R${{$ctrl.keg.pintPrice.toFixed(2) }}
+            md-menu-item
+              .md-subhead LITRO:R${{$ctrl.keg.literPrice.toFixed(2) }}
+            md-menu-item
+              .md-subhead TOTAL:R${{ $ctrl.getTotal()}}
+            md-menu-item.menu-header
+              h3 {{ $ctrl.keg.kegId}}LJ{{("0" + $ctrl.keg.store.order).slice(-2)}} 
+        div(layout='column'  layout-gt-sm='row' flex='45'  flex-gt-sm='45' layout-align='center center')
+          md-button.md-primary.md-raised.md-secondary(aria-label='Adicionar Litro' ng-click='$ctrl.addLiter()'  ng-if='$ctrl.edit')
+            md-icon(title='Adicionar Litro') add
+          .container-label(layout='row' layout-align="start start")
+            div(layout='column' layout-align='center center')
+              span.title-label LITRO
+              span.quantity-label(flex) {{$ctrl.keg.qtdLiter || 0}}
+          md-button.md-warn.md-raised.md-secondary(aria-label='Remover Litro' ng-click='$ctrl.removeLiter()' ng-disabled='!$ctrl.keg.qtdLiter'  ng-if='$ctrl.edit')
+            md-icon(title='Remover Litro') remove

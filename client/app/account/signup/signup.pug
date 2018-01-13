@@ -1,0 +1,47 @@
+md-content
+  md-card.container
+    md-card-header
+      md-card-header-text      
+        span.md-title {{ vm.title }}
+    md-card-content
+      form(name='editForm' layout='column' ng-submit='vm.register(editForm)')
+        md-input-container
+          label Nome
+          input(required ng-model='vm.user.name' name='name')
+          div(ng-messages='editForm.name.$touched && editForm.name.$error')
+            div(ng-message='required') Campo obrigatório
+        md-input-container
+          md-radio-group(ng-value='vm.user.role' ng-model='vm.user.role')
+            md-radio-button.md-primary(value='user') Não-Admin
+            md-radio-button(value='admin')  Admin
+        md-input-container
+          md-radio-group(ng-value='vm.user.active' ng-model='vm.user.active')
+            md-radio-button.md-primary(value='true') Ativo
+            md-radio-button(value='false')  Inativo
+        md-input-container(ng-if='vm.isEdition')
+          label Email 
+          input(ng-model='vm.user.email' name='email' type='email' readonly)
+        md-input-container(ng-if='!vm.isEdition')
+          label Email
+          input(ng-model='vm.user.email' name='email' type='email' required)
+          div(ng-messages='editForm.email.$touched && editForm.email.$error')
+            div(ng-message='required') Campo obrigatório
+            div(ng-message='email') Digite um e-mail válido
+            div(ng-message='mongoose') {{ vm.errors.email }}
+        md-input-container(ng-if='!vm.isEdition')
+          label Senha
+          input(ng-model='vm.user.password' name='password' type='password' ng-minlength='4' required)
+          div(ng-messages='editForm.password.$touched && editForm.password.$error')
+            div(ng-message='minlength') Digite pelo menos 4 caracteres
+            div(ng-message='required') Campo obrigatório
+            div(ng-message='mongoose') {{ vm.errors.password }}
+        md-input-container(ng-if='!vm.isEdition')
+          label Confirme a senha
+          input(ng-model='vm.user.confirmPassword' name='confirmPassword' type='password' match='vm.user.password' required)
+          div(ng-messages='editForm.confirmPassword.$touched && editForm.confirmPassword.$error')
+            div(ng-message='match') As senhas não são iguais
+            div(ng-message='required') Campo obrigatório
+        div(layout='column' layout-gt-sm='row')
+          md-button.md-raised.md-warn(aria-label='Salvar' type='submit' ng-disabled="vm.submitted") Salvar
+          md-button(aria-label='Salvar' ng-click='vm.onClickCancelButton()' ng-disabled="vm.submitted") Cancelar
+          md-button.md-raised.md-accent(aria-label='Alterar senha' ui-sref='change-password({ id: vm.user._id })' ng-if='vm.canChangePassword' ng-disabled="vm.submitted") Alterar Senha

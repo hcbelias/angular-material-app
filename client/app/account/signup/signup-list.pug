@@ -1,0 +1,14 @@
+md-content
+  md-card.container
+    md-list
+      md-toolbar.md-menu-toolbar(md-scroll-shrink)
+        .md-toolbar-tools
+          md-input-container.full-width(md-no-float='')
+            input(ng-model='vm.searchText' ng-model-options='{debounce:300}', ng-change='vm.search(vm.searchText)' placeholder='{{vm.label}}')
+      md-list-item.md-3-line(ng-click='vm.openInfo(entry._id)' ng-repeat='entry in vm.data')
+        .md-list-item-text(layout='column')
+          h3 {{entry.name}}
+          h4 {{entry.email}}
+          p {{entry.active ? "Ativo" : "Inativo"}} 
+            span {{entry.role === 'admin' ? "Administrador" : ""}} 
+

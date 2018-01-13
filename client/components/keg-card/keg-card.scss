@@ -1,0 +1,88 @@
+@import '../../app/variables';
+@keyframes warning-blink {
+    0% {
+        background-color: #fff;
+    }
+    49% {
+        background-color: #fff;
+    }
+    50% {
+        background-color: #ff000045;
+    }
+    99% {
+        background-color: #ff000045;
+    }
+    100% {
+        background-color: #ff000045;
+    }
+}
+
+.kegcard {
+    @media #{$large-and-up} {
+       
+    }
+    .button-container{
+        height: 45px;
+    }
+
+    &.warning-card {
+        &.blink-effect {
+            background-color: #ff000045;
+            animation: warning-blink 1s infinite;
+        }
+    }
+    .title-label {
+        color: rgba(0, 0, 0, 0.54);
+        font-size: medium;
+    }
+    .quantity-label {
+        text-align: center;
+        font-weight: bold;
+        font-size: medium;
+    }
+
+    .md-title{
+        font-size: medium;
+    }
+    .number-position {
+        font-size: 18px;
+        background-color: #3f51b5;
+        color: white;
+        font-weight: bold;
+        display: inline-table;
+        margin: 5px;
+        padding: 10px;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+    .md-subhead {
+        .warning {
+            color: red;
+        }
+        &.warning-text {
+            color: red;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    }
+    md-card-header-text {
+        padding-left: 10px;
+    }
+    .card-info {
+        h2 {
+            margin: 0;
+        }
+    }
+    .container-label {
+        padding: 3px;
+    }
+}
+
+md-card.kegcard {
+    md-card-header.shrink-header {
+        padding: 0px;
+        margin: 0px;
+    }
+    margin: 0;
+}

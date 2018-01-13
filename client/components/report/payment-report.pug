@@ -1,0 +1,26 @@
+md-card(layout='column')
+  form(name='queryForm' ng-submit='ctrl.searchPaymentData()' layout='row').md-padding
+    md-input-container
+      label(flex) Data Inicial
+      md-datepicker(ng-model="ctrl.startDate" md-placeholder="Data Início" name="startDate" ng-disabled='ctrl.loading')                      
+    md-input-container
+      label(flex) Data Final
+      md-datepicker(ng-model="ctrl.endDate" md-placeholder="Data Final" name="endDate" ng-disabled='ctrl.loading')                      
+    md-input-container
+      md-select(placeholder='Escolha uma loja', ng-model='ctrl.store' required name='store' ng-disabled='ctrl.loading')
+        md-option(ng-value='iterator' ng-repeat='iterator in ctrl.storeList' ng-selected='$index === 0') {{iterator.name}}
+      div(ng-messages='queryForm.store.$error')
+        div(ng-message='required') Campo obrigatório
+    div(layout='column')
+      md-button.md-raised.md-warn(type='submit' ng-disabled='ctrl.loading') Atualizar
+      md-button.md-raised.md-accent(type='button' ng-click='ctrl.generateFile()' ng-disabled='ctrl.loading') Gerar CSV
+  canvas.container.chart.chart-bar(chart-data='ctrl.data', chart-labels='ctrl.labels' chart-options="ctrl.chartOptions" chart-dataset-override="ctrl.datasetOverride")
+  md-card(layout-padding layout-margin ng-if='ctrl.reportData')
+    .md-card-text(layout='column' layout-padding layout-gt-xs='row')
+      .md-title Total
+      div(layout='column')
+        .md-subhead Dinheiro:
+        .md-headline R$ {{ ctrl.getTotal("paymentMoney") }}
+      div(layout='column')
+        .md-subhead Cartão:
+        .md-headline R$ {{ ctrl.getTotal("paymentCard") }}

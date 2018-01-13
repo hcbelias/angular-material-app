@@ -1,0 +1,30 @@
+
+/* Media Queries */
+$small-screen-up: 601px !default;
+$medium-screen-up: 993px !default;
+$large-screen-up: 1201px !default;
+$small-screen: 600px !default;
+$medium-screen: 992px !default;
+$large-screen: 1200px !default;
+$medium-and-up: "only screen and (min-width : #{$small-screen-up})" !default;
+$large-and-up: "only screen and (min-width : #{$medium-screen-up})" !default;
+$small-and-down: "only screen and (max-width : #{$small-screen})" !default;
+$medium-and-down: "only screen and (max-width : #{$medium-screen})" !default;
+$medium-only: "only screen and (min-width : #{$small-screen-up}) and (max-width : #{$medium-screen})" !default;
+$medium-to-large: "only screen and (min-width : #{$medium-screen-up}) and (max-width : #{$large-screen})" !default;
+$x-large-and-up: "only screen and (min-width : #{$large-screen})" !default;
+
+
+$red-color: #CC0000;
+$orange-color: #FF9933;
+
+
+@font-face {
+    font-family: 'CustomWebsiteFont';
+    src: 
+        //url('webfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        //url('webfont.woff2') format('woff2'), /* Super Modern Browsers */
+        //url('webfont.woff') format('woff'), /* Pretty Modern Browsers */
+        url('../assets/fonts/arial_rounded_bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+        //url('webfont.svg#svgFontName') format('svg'); /* Legacy iOS */
+}

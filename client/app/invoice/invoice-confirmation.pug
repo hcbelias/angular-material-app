@@ -1,0 +1,66 @@
+md-content.invoice-confirmation
+  md-card.container.invoice-title
+    md-card-header(layout='column' ng-click='ctrl.openInvoiceDetail()')
+      span.md-display-1 # {{ctrl.data.invoiceNumber}} 
+      span.md-headline {{ctrl.data.provider.name}}
+      span.md-headline {{ctrl.data.store.name}}
+      span.md-headline {{ctrl.data.done === 'true' ?  "Pendente" : "Enviado para o estoque" }}
+  md-card.container
+    md-toolbar(md-scroll-shrink)
+      .md-toolbar-tools Confirmação de Recebimento
+    md-list
+      md-list-item(ng-repeat='entry in ctrl.data.productList | orderBy : "done"' layout='column' layout-align='space-around stretch'  layout-padding layout-margin)
+        div(layout='row' layout-align='start center')
+          md-subheader.md-accent(ng-if='!entry.done' layout-margin) Não Confirmado
+          md-subheader.md-primary(ng-if='entry.done' layout-margin) Confirmado
+          md-list-item-text(layout='column' layout-gt-sm='row')
+            div(layout='column')
+              h3 {{ entry.product.name }} 
+              h4 {{ entry.product.provider.name }} 
+              h4 {{ entry.product.item.name }}
+            div(layout-gt-sm='row' layout='column' layout-align='center start' layout-padding)
+              div(layout='column')
+                h3.volume-cost-label {{ entry.product.item.isKeg ? "Custo R$/L" : "Custo Un." }}
+                p R${{entry.unitCost}}
+              div(layout='column')
+                h3.volume-cost-label Custo Total
+                p R${{  entry.product.item.isKeg ? entry.totalCostVolume.toFixed(2) : entry.totalCost.toFixed(2)}}
+              div(layout='column')
+                h3.volume-cost-label {{  entry.product.item.isKeg ? "Volume Total" : "Quantidade"}}
+                p {{  entry.product.item.isKeg ? entry.totalLiterVolume.toFixed(2) + "L" : entry.quantity }}
+        div(layout='column' layout-gt-xs='column' layout-align='space-between start' ng-if='entry.product.item.isKeg && !entry.done')
+          ng-form(layout='column' layout-gt-xs='row' layout-align='space-between start' name='kegInputForm')
+            div(layout='row' layout-align='space-between start')
+              h3.volume-cost-label Preço R$/500mL
+              md-input-container
+                label.volume-cost-label Preço 500mL
+                input#inputMoney(flex required ng-model='entry.sellPricePint' name='sellPricePint' type='text' ui-hide-group-sep ui-number-mask='2' ng-pattern="/^[0-9]+(\.[0-9]{2})?$/" step="0.01" min="0" ng-disabled='entry.done  || !ctrl.isAdmin')
+                div(ng-messages='kegInputForm.sellPricePint.$touched && kegInputForm.sellPricePint.$error')
+                  div(ng-message='required') Campo obrigatório
+                  div(ng-message='pattern') O Custo Unitário deve ser um número válido
+            div(layout='row' layout-align='space-between start')
+              h3.volume-cost-label Preço R$/L
+              md-input-container
+                label.volume-cost-label Preço Litro
+                input#inputMoney(flex required ng-model='entry.sellPriceLiter' name='sellPriceLiter' type='text' ui-hide-group-sep ui-number-mask='2' ng-pattern="/^[0-9]+(\.[0-9]{2})?$/" step="0.01" min="0" ng-disabled='entry.done || !ctrl.isAdmin')
+                div(ng-messages='kegInputForm.sellPriceLiter.$touched && kegInputForm.sellPriceLiter.$error')
+                  div(ng-message='required') Campo obrigatório
+                  div(ng-message='pattern') O Custo Unitário deve ser um número válido
+          div(layout='column' layout-gt-sm='row' ng-if='entry.product.item.isKeg' layout-align='space-between start')  
+            h3.volume-cost-label Barris Recebidos
+            div(layout='column' ng-repeat='keg in entry.volume | filter:keg.enabled' flex ng-if='keg.enabled && keg.quantity > 0 && !keg.done'  layout-align='center center') 
+              h3.volume-cost-label {{ keg.volume }} L
+              ng-form(layout='column' name='kegForm' )
+                md-button.md-warn.md-raised(aria-label='Confirmar Pedido' type='button' ng-repeat="n in [] | range:keg" ng-click='ctrl.confirmKeg(entry, keg, entry.sellPriceLiter, entry.sellPricePint, kegInputForm)' ng-disabled='!entry.sellPriceLiter || !entry.sellPricePint || (entry.sellPriceLiter <= entry.sellPricePint)') Confirmar
+        div(ng-if='!entry.product.item.isKeg && !entry.done' layout='column' layout-gt-xs='row' layout-align='start center')
+          form(name='itemForm' layout='column' layout-gt-xs='row' layout-align='start center' ng-submit='ctrl.confirmProduct(entry)')
+            div(layout='column' layout-gt-xs='row')
+              h3.volume-cost-label Preço R$/Un.
+              md-input-container
+                label.volume-cost-label Preço Unitário
+                input#inputMoney(flex required ng-model='entry.sellPrice' name='sellPrice' type='text' ui-hide-group-sep ui-number-mask='2' ng-pattern="/^[0-9]+(\.[0-9]{2})?$/" step="0.01" min="0" ng-disabled='entry.done  || !ctrl.isAdmin')
+                div(ng-messages='itemForm.sellPrice.$touched && itemForm.sellPrice.$error')
+                  div(ng-message='required') Campo obrigatório
+                  div(ng-message='pattern') O Custo Unitário deve ser um número válido
+            div(layout='row')
+              md-button.md-warn.md-raised(aria-label='Confirmar Pedido' type='submit' ng-if='!entry.done' ng-disabled='!entry.sellPrice') Confirmar

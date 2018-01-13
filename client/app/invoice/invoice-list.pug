@@ -1,0 +1,25 @@
+md-content.invoice-list
+  md-card.container
+    md-list
+      md-toolbar.md-menu-toolbar(md-scroll-shrink)
+        div(layout='column' layout-padding)
+          md-input-container.full-width(md-no-float='')
+            input(ng-model='ctrl.searchText' ng-model-options='{debounce:300}', ng-change='ctrl.search(ctrl.searchText, ctrl.statusFilter, ctrl.storeFilter)' placeholder='{{ctrl.label}}' autofocus)
+          md-input-container.full-width(md-no-float='' flex)
+            label Filtro por Status
+            md-radio-group(ng-model='ctrl.statusFilter' ng-change='ctrl.search(ctrl.searchText, ctrl.statusFilter, ctrl.storeFilter)' layout='row' layout-align="space-around center")
+              md-radio-button.md-primary(value='active')  Pendentes
+              md-radio-button.md-primary(value='inactive') Enviados para Estoque
+              md-radio-button.md-primary(value='all') Todos
+          md-input-container.full-width(md-no-float='' flex ng-show='ctrl.storeList && ctrl.storeList.length > 0')
+            md-radio-group(ng-model='ctrl.storeFilter' ng-change='ctrl.search(ctrl.searchText, ctrl.statusFilter, ctrl.storeFilter)' layout='row' layout-align="space-around center")
+              label Filtro por Loja
+              md-radio-button.md-primary(value='all') Todas Lojas
+              md-radio-button.md-primary(ng-value='iterator._id' ng-repeat='iterator in ctrl.storeList')  {{ iterator.name }}
+      md-list-item.md-3-line(ng-click='ctrl.openInfo(entry._id)' ng-repeat='entry in ctrl.data')
+        .md-list-item-text(layout='column')
+          h3 # {{entry.invoiceNumber}} - {{ entry.provider.shortName || entry.provider.name }}
+          h4 {{entry.store.name}}
+          p {{entry.done ? "Enviado para estoque" : "Pendente"}}
+          .md-subhead Quantidade: {{entry.totalQuantity}} items
+

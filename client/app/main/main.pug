@@ -1,0 +1,80 @@
+md-content(layout='column' layout-gt-sm='row' ng-if='$ctrl.loading && $ctrl.initialized  && !$ctrl.errorMsg').main.full-content
+  h1 Processando...
+md-content.main.full-content(flex ng-if='$ctrl.initialized && !$ctrl.loading && $ctrl.errorMsg')
+  h1 Erro: {{ $ctrl.errorMsg }}
+  h1 Param: {{$ctrl.errorParam }}
+md-content.main.full-content(flex ng-if='!$ctrl.initialized && !$ctrl.loading  && !$ctrl.errorMsg')
+  h1 Por favor, entre em contato com o administrador para selecionar a loja neste dispositivo
+md-content(layout='column' layout-gt-sm='row' ng-if='!$ctrl.loading && $ctrl.initialized  && !$ctrl.errorMsg').main.full-content
+  div(flex ng-if='$ctrl.initialized && !$ctrl.isCashierOpen && $ctrl.lockedCashier' layout-margin layout-padding)
+    .md-display Caixa aberto por outro funcionário: {{ $ctrl.cashier.userEmailOpened }}
+  div(flex ng-if='$ctrl.initialized && !$ctrl.isCashierOpen && !$ctrl.lockedCashier' layout-margin layout-padding)
+    .md-display Realizar Abertura do Caixa
+    form(name='cashierBalanceForm' ng-submit='$ctrl.openCashier()')
+      md-button.md-raised.md-warn(aria-label='Abrir Caixa' type='submit' ng-disabled='$ctrl.moneyBalance !== 0 && !$ctrl.moneyBalance') Abrir Caixa
+      md-input-container
+        label Saldo Inicial do Caixa
+        input(ng-model='$ctrl.moneyBalance' name='moneyBalance' ui-hide-group-sep ui-number-mask='2' ng-pattern="/^[0-9]+(\.[0-9]{2})?$/" step="0.01" min="0" required)
+        div(ng-messages='cashierBalanceForm.moneyBalance.$touched && cashierBalanceForm.moneyBalance.$error')
+          div(ng-message='required') Campo obrigatório
+  div(flex ng-if='$ctrl.initialized && $ctrl.isCashierOpen')
+    keg-card(ng-repeat='keg in $ctrl.kegList track by $index' keg='keg' position='$index' store='$ctrl.storeId' cb='$ctrl.getActiveKegList()' edit='true')
+  div(flex layout='column' flex-gt-sm='30' ng-if='$ctrl.initialized && $ctrl.isCashierOpen && !$ctrl.lockedCashier')
+    menu-order(store='$ctrl.storeId' growler='$ctrl.checkIfGrowlerIsNeeded()' product-selected-list='$ctrl.productSelectedList' growler-list="$ctrl.growlerList")
+    md-card(layout='column')
+      md-toolbar(layout='column')
+        .md-toolbar-tools 
+          md-menu(md-offset='0, 50')
+            md-button.md-icon-button(aria-label='Últimas Vendas', ng-click='$mdMenu.open($event)')
+              md-icon(md-menu-origin='' title='Últimas Vendas') history
+            md-menu-content(width="6")
+              md-menu-item.menu-header
+                h3 Vendas - Financeiro
+              md-menu-item
+                span Horário
+                span Total(R$)
+                span Dinheiro(R$)
+                span Cartão(R$)
+              md-menu-item(ng-repeat='sale in $ctrl.cashier.sales | orderBy:"-createdAt"')
+                span {{ sale.createdAt | date:'HH:mm:ss'}}
+                span.money-span {{ sale.total.toFixed(2) }}
+                span.money-span {{ sale.paymentMoney.toFixed(2) }}
+                span.money-span {{ sale.paymentCard.toFixed(2)  }}
+          md-menu(md-offset='0, 50')
+            md-button.md-icon-button(aria-label='Últimas Vendas', ng-click='$mdMenu.open($event)')
+              md-icon(md-menu-origin='' title='Últimas Vendas') store
+            md-menu-content(width="6")
+              md-menu-item.menu-header
+                h3 Últimas Vendas - Produtos
+              md-menu-item
+                span Horário
+                span Lista de Produtos
+              md-menu-item(ng-repeat='sale in $ctrl.cashier.sales | orderBy:"-createdAt" | limitTo:3' layout-align='start start')
+                span {{ sale.createdAt | date:'HH:mm:ss'}}
+                div(ng-repeat='iterator in sale.stockList' layout='column' layout-align='start start')
+                  span(flex) {{ iterator.name }}
+          md-menu(md-offset='0, 50')
+            md-button.md-icon-button(aria-label='', ng-click='$mdMenu.open($event)')
+              md-icon(md-menu-origin='' title='Informações de Caixa') info
+            md-menu-content(width="6")
+              md-menu-item.menu-header
+                h3 Informações de Caixa
+              md-menu-item
+                .md-subhead Caixa Aberto em {{ $ctrl.cashier.createdAt | date: 'dd-MM-yyyy HH:mm:ss'}} por {{ $ctrl.cashier.userNameOpened || $ctrl.cashier.userEmailOpened }}
+              md-menu-item
+                span Caixa Inicial: R$ {{$ctrl.cashier.moneyBalance }}
+              md-menu-item
+                span Qtd. Vendas Total : {{ $ctrl.cashier.sales.length }}
+                span Cartão: {{$ctrl.getCardSales() }}
+                span Dinheiro: {{$ctrl.getMoneySales() }}
+                span Ambos: {{$ctrl.getCardAndMoneySales() }}
+              md-menu-item
+                span Faturamento Total: R$ {{$ctrl.getTotalPayment().toFixed(2) }}
+                span Dinheiro: R$ {{$ctrl.getMoneyPayment().toFixed(2) }}
+                span Cartão: R$ {{$ctrl.getCardPayment().toFixed(2) }}
+          md-button.md-raised.md-accent(aria-label='Fechar Caixa' ng-click='$ctrl.openCashierInfoModal()' title='Fechar Caixa') Encerrar
+      .total-value R$ {{ $ctrl.getTotalSale() }}
+        md-toolbar(layout='column' layout-gt-sm='row')
+          md-button.md-raised.md-warn(aria-label='Limpar Tela' ng-click='$ctrl.cancelSale()' title='Limpar Tela') Limpar 
+          md-button.md-raised(aria-label='Confirmar Venda' flex ng-click='$ctrl.finalizeSale()' title='Confirmar Venda') Confirmar
+  

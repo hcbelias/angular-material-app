@@ -1,0 +1,20 @@
+md-content(layout="column" layout-align="center center")
+  p.md-display-2 web - Chopp no Litro
+  md-card.container
+    md-card-content
+      form(name='editForm' layout='column' ng-submit='vm.login(editForm)')
+        md-input-container
+          label E-mail
+          input(required ng-model='vm.user.email' name='email')
+          div(ng-messages='editForm.email.$touched && editForm.email.$error')
+            div(ng-message='required') Campo obrigatório
+            div(ng-message='vm.errors.login') {{vm.errors.login}} 
+        md-input-container
+          label Password
+          input(required ng-model='vm.user.password' name='password' type='password')
+          div(ng-messages='editForm.password.$touched && editForm.password.$error')
+            div(ng-message='required') Campo obrigatório
+          div(ng-messages='vm.errors.login')
+            p {{ vm.errors.login }}
+        div(layout='column' layout-gt-sm='row' layout-align='center center')
+          md-button.md-raised.md-warn(aria-label='Salvar' type='submit' ng-disabled="vm.submitted") Login

@@ -1,0 +1,22 @@
+md-content
+  md-card.container
+    md-list
+      md-toolbar.md-menu-toolbar(md-scroll-shrink)
+        div(layout='column' layout-padding)
+          md-input-container.full-width(md-no-float='' flex)
+            input(ng-model='ctrl.searchText' ng-model-options='{debounce:300}', ng-change='ctrl.search(ctrl.searchText, ctrl.filter)' placeholder='{{ctrl.label}}' autofocus)
+          md-input-container.full-width(md-no-float='' flex)
+            md-radio-group(ng-model='ctrl.filter' ng-change='ctrl.search(ctrl.searchText, ctrl.filter)' layout='row' layout-align="space-around center")
+              md-radio-button.md-primary(value='active')  Ativos
+              md-radio-button.md-primary(value='inactive') Inativos
+              md-radio-button.md-primary(value='all') Todos
+      md-list-item.md-3-line(ng-click='ctrl.openInfo(entry._id)' ng-repeat='entry in ctrl.data')
+        .md-list-item-text(layout='column' layout-gt-sm='row')
+          div(layout='column' layout-padding)
+            img.img-product(src='{{entry.imgGooglePath}}' style='max-width: 270px;')
+          div(layout='column')
+            h2 {{entry.name}}
+            h4 {{entry.item.name}} - {{entry.provider.name || entry.provider.shortName}}
+            p {{entry.active ? "Ativo" : "Inativo"}}
+
+

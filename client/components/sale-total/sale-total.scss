@@ -1,0 +1,15 @@
+.sale-total {
+    md-card {
+        margin: 8px 0;
+        md-card-header{
+            padding: 0;
+        }
+    }
+    .quantity-label {
+        text-align: center;
+        font-size: 25px;
+    }
+    .shrink-header{
+        margin: 5px;
+    }
+}

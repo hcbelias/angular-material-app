@@ -1,0 +1,21 @@
+md-content(layout='column' flex='grow' layout-align='space-around stretch').storeview
+  .web-container(layout='row'  flex='30')
+    div.borderline-container(layout='column' flex-gt-xs='25' flex-gt-sm='35' layout-align='center center')
+      p.borderline
+    div(layout='column' flex layout-align='center center')
+      img(src='../../assets/images/web-title.png')
+    div.borderline-container(layout='column' flex-gt-xs='25' flex-gt-sm='35' layout-align='center center')
+      p.borderline
+  div(layout='row' flex layout-align='center center')
+    p.address-text.md-display-1 {{ $ctrl.store.address }}
+  .keg-container-list(layout='column' layout-gt-xs='row' layout-gt-sm='row' flex='grow'  layout-wrap)
+    keg-detail-card(keg='entry' position='$index' ng-repeat='entry in $ctrl.kegList' flex flex-gt-xs='50' flex-gt-sm='20' small='true')
+  div(layout='row' flex='30')
+    div.borderline-container(layout='column' flex-gt-xs='25' flex-gt-sm='35' layout-align='center center')
+      p.borderline.yellow.small
+    div(layout='column' flex layout-align='center center')
+      p.footer-text.md-headline @choppnolitro
+    div.borderline-container(layout='column' flex-gt-xs='25' flex-gt-sm='35' layout-align='center center')
+      p.borderline.yellow.small
+  
+    

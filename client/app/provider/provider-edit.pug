@@ -1,0 +1,65 @@
+md-content
+  md-card.container
+    md-card-header
+      md-card-header-text      
+        span.md-title {{ ctrl.title }}
+    md-card-content
+      form(name='editForm' layout='column' ng-submit='ctrl.onClickSaveButton(editForm)')
+        md-input-container
+          label Razão Social
+          input(required ng-model='ctrl.data.name' name='name' autofocus)
+          div(ng-messages='editForm.name.$touched && editForm.name.$error')
+            div(ng-message='required') Campo obrigatório
+        md-input-container
+          md-radio-group(ng-model='ctrl.data.active')
+            md-radio-button.md-primary(value='true') Ativo
+            md-radio-button(value='false')  Inativo
+        md-input-container
+          label Nome Fantasia 
+          input(ng-model='ctrl.data.shortName' name='shortName' required)
+        md-input-container
+          label Endereço
+          input(ng-model='ctrl.data.address' name='address')
+        md-input-container
+          label Email 
+          input(ng-model='ctrl.data.email' name='email')
+        md-input-container
+          label CNPJ/CPF
+          input(ng-model='ctrl.data.CNPJ' name='CNPJ')
+        md-input-container
+          label Telefone
+          input(ng-model='ctrl.data.phoneNumber' name='phoneNumber')
+        div(layout='column' layout-gt-sm='row')
+          md-button.md-raised.md-warn(aria-label='Salvar' type='submit') Salvar
+          md-button(aria-label='Salvar' ng-click='ctrl.onClickCancelButton()') Cancelar
+      md-tabs(md-dynamic-height ng-if='ctrl.isEdition')
+        md-tab(label='Produtos')
+          md-list
+            md-list-item.md-3-line
+              .md-list-item-text(layout='column' layout-align='center center')
+                md-button(ng-click='ctrl.openProduct("new")')
+                  md-icon(md-menu-align-target='') shopping_basket
+                  p Novo Produto
+            md-list-item.md-3-line(ng-if='!ctrl.productList || ctrl.productList.length == 0')
+              .md-list-item-text(layout='column')
+                h3 Não há produtos cadastrados para este fornecedor
+            md-list-item.md-3-line(ng-click='ctrl.openProduct(entry._id)' ng-repeat='entry in ctrl.productList')
+              .md-list-item-text(layout='column')
+                h3 {{ entry.name}}
+                h4 {{ entry.provider.name }} 
+                p {{ entry.item.name }}
+        md-tab(label='Pedidos')
+          md-list
+            md-list-item.md-3-line
+              .md-list-item-text(layout='column' layout-align='center center')
+                md-button(ng-click='ctrl.openInvoice("new")')
+                  md-icon(md-menu-align-target='') receipt
+                  p Novo Pedido
+            md-list-item.md-3-line(ng-if='!ctrl.invoiceList || ctrl.invoiceList.length == 0')
+              .md-list-item-text(layout='column')
+                h3 Não há pedidos cadastrados para este fornecedor
+            md-list-item.md-3-line(ng-click='ctrl.openInvoice(entry._id)' ng-repeat='entry in ctrl.invoiceList')
+              .md-list-item-text(layout='column' layout-margin)
+                span.md-headline Pedido # {{ entry.invoiceNumber}}
+                span.md-subhead {{ entry.store.name }}
+                span.md-subhead {{!entry.done ?  "Pendente" : "Enviado para o estoque" }}

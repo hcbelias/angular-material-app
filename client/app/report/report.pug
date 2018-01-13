@@ -1,0 +1,19 @@
+md-card.report
+  md-card-header
+    md-card-header-text      
+      h1.md-display-1 Relatórios
+  md-card-content
+    md-card
+      md-tabs(md-dynamic-height='')
+        md-tab(label='faturamento')
+          md-content
+            payment-report(store-list="$ctrl.storeList")
+        md-tab(label='fechamento de caixa')
+          md-content
+            cashier-report(store-list="$ctrl.storeList" complete='true')
+        md-tab(label='vendas')
+          md-content
+            sales-report(store-list="$ctrl.storeList")
+        md-tab(label='barril')
+          md-content
+            keg-report(store-list="$ctrl.storeList")
